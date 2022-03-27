@@ -2,6 +2,7 @@ import ast
 import json
 import requests
 from geopy.geocoders import Nominatim
+import geocoder
 
 apiKey = "30a81a9a-3827-4f06-b102-dbb8631f67b6" #API Key for AirLabs
 
@@ -11,12 +12,42 @@ arrUrl = "https://airlabs.co/api/v9/flights?arr_iata="
 airportsUrl = "https://airlabs.co/api/v9/airports?iata_code="
 airlineUrl = "https://airlabs.co/api/v9/airlines?iata_code="
 
+#Finds current location
+def getCurrLoc(distance):
+    try:
+        coords = geocoder.ip("me")
+        lat = coords.latlng[0]
+        lng = coords.latlng[1]
+        reqLink = nearbyUrl
+        reqLink += ("lat=" + str(lat) + "&lng=" + str(lng) + "&distance=" 
+                    + str(distance) + "&api_key=" + apiKey)
+        r = requests.get(reqLink)
+        data = r.json()
+        
+        geolocator = Nominatim(user_agent="http")
+        location = geolocator.reverse(str(lat) + ", " + str(lng))
+
+        if len(data['response']['airports']) == 0: #No airports
+            raise Exception("No airports")
+        #Returning and dumping data into JSON
+        aData = {"search-terms": "Current location", "place": data['response']['cities'][0]['name'],
+                 "official-name": location.address, "airports": data['response']['airports']}
+        with open("airports.json", "w") as aFile:
+            json.dump(aData, aFile)
+        return 1 #Indicates that there are airports
+    except AttributeError: #Invalid reponse
+        return 0
+    except Exception:#No airports found
+        return 0
+    
+
+
 #Used for finding coordinates
 def findAirports(term, distance):
     try:
         #Gets latitude and latitude data
         geolocator = Nominatim(user_agent="http")
-        location = geolocator.geocode(x)
+        location = geolocator.geocode(term)
         lat = location.latitude
         long = location.longitude
         
@@ -71,10 +102,6 @@ def findFlights(index):
 
 
 #Testing
-x = input("Enter a place: ")  
-y = findAirports(x, 50)
-print(y)
-a = int(input("Enter airport: "))
-print(findFlights(a))
+print(getCurrLoc(50))
 
 
