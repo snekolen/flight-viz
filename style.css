@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
+body {
+    background-color: #D4E8EC;
+}
+
+#mode-toggle {
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding-top: 21px;
+    padding-right: 30px;
+}
+
+#site-logo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: #1e2b3d;
+    font-family: Karla;
+    font-size: 25px;
+    padding-left: 22px;
+    padding-top: 25px;
+}
+
+#site-logo span {
+    font-weight: 600;
+    padding-left: 2px;
+}
+
+#mode-toggle i{
+    font-size: 20px;
+    padding-left: 8px; 
+    padding-right: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#content {
+    width: 800px;
+    background-color: rgb(244, 248, 252);
+    margin-top: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#page1, #page2, #page3, #page4 {
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+#top-content {
+    text-align: center;
+    font-size: 21px;
+}
+
+#progress-bar {
+    padding-top: 22px;
+}
+
+#progress-bar i {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/*Manages page visibility*/
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
